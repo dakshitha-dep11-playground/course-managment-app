@@ -1,0 +1,30 @@
+body {
+  height: 100vh;
+}
+
+header {
+  color: #e6ddcd;
+  background-color: #040468;
+  height: 40px;
+  font-size: 2rem;
+  font-weight: bolder;
+}
+
+footer {
+  color: #fff;
+  background-color: #040468;
+  height: 30px;
+  font-size: .8rem;
+  position: relative;
+}
+
+#main-container {
+  background-color: wheat;
+  height: 100%;
+}
+
+#main-container > div > div {
+  border: 1px solid #000;
+}
+
+/*# sourceMappingURL=courses.3626e52d.css.map */
