@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teachers</title>
+    <link rel="stylesheet" href="/index.0d5f8989.css">
+    <link rel="stylesheet" href="/index.f004ef08.css">
+    <link rel="stylesheet" href="/temp.b33672df.css">
+    <script src="/teachers.0a5bf725.js" defer=""></script>
+</head>
+<body class="d-block flex-column vh-100">
+    <header class="d-flex justify-content-center align-items-center gap-5 border-bottom">
+        <img src="/lecturer-1.1d30078c.png" alt=""><h1>Teachers Log</h1>
+    </header>
+    <main class="row mt-4 text-center d-flex flex-grow-1">
+        
+        <div id="form" class="col-md-5 d-flex flex-column border rounded-4">
+            <h3 class="mt-1">Register New Teacher</h3>
+            <form action="">
+                <label for="t-id" class="form-label">ID</label>
+                <input type="text" class="form-control" id="t-id">
+
+                <label for="name" class="form-label">Name</label>
+                <input type="text" class="form-control" id="name">
+
+                <label for="contact" class="form-label">Contact</label>
+                <input type="text" class="form-control" id="contact">
+
+                <div class="mt-3 d-flex justify-content-around mb-4">
+                    <button id="save" type="button" class="btn btn-success">Save</button>
+                    <button id="reset" type="button" class="btn btn-danger">Clear</button>
+                </div>
+            </form>
+            
+
+        </div>
+        <div id="log" class="col-md-7">
+            <h3>Teachers Log</h3>
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>NAME</th>
+                        <th>CONTACT</th>
+                        <th>ACTION</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Mohan</td>
+                        <td>077-1233456</td>
+                        <td class="d-flex justify-content-center align-items-center gap-2"><i class="bi bi-trash btn btn-outline-danger"></i><i class="bi bi-pencil-square btn btn-outline-info"></i></td>
+                    </tr>
+                </tbody>
+
+            </table>
+        </div>
+    </main>
+    <footer class="row border-top">
+        Copyrights &copy; 2023 Wishvanath Adhikari Allrights Reserved
+    </footer>
+    
+</body>
+</html>
