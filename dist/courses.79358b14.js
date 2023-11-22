@@ -142,13 +142,13 @@
       this[globalName] = mainExports;
     }
   }
-})({"amRpJ":[function(require,module,exports) {
+})({"7OWwZ":[function(require,module,exports) {
 var global = arguments[3];
 var HMR_HOST = null;
 var HMR_PORT = null;
 var HMR_SECURE = false;
 var HMR_ENV_HASH = "d6ea1d42532a7575";
-module.bundle.HMR_BUNDLE_ID = "d0a9ad0e521d3eee";
+module.bundle.HMR_BUNDLE_ID = "b1506f9079358b14";
 "use strict";
 /* global HMR_HOST, HMR_PORT, HMR_ENV_HASH, HMR_SECURE, chrome, browser, __parcel__import__, __parcel__importScripts__, ServiceWorkerGlobalScope */ /*::
 import type {
@@ -574,61 +574,145 @@ function hmrAccept(bundle /*: ParcelRequire */ , id /*: string */ ) {
     });
 }
 
-},{}],"5DaYm":[function(require,module,exports) {
-const txtNameElm = document.querySelector("#txt-name");
-const txtContactElm = document.querySelector("#txt-contact");
+},{}],"eM5YZ":[function(require,module,exports) {
+const txtNameElm = document.querySelector("#course-name");
+const txtDurationElm = document.querySelector("#course-duration");
 const btnAddElm = document.querySelector("#btn-add");
-const API_BASE_URL = "https://97803577-4761-427d-a367-08996e2c4674.mock.pstmn.io";
-alert(API_BASE_URL);
+const tblBodyElm = document.querySelector("#tbody");
+const btnClear = document.querySelector("#btn-clear");
+let selectedCourse = null;
+let selectedCourseData = null;
+loadAllCourses();
 btnAddElm.addEventListener("click", ()=>{
-    const name = txtNameElm.value;
-    const contact = txtContactElm.value;
-    if (!/^[A-Za-z ]+$/.test(name)) {
-        txtNameElm.focus();
-        txtNameElm.select();
-        return;
-    } else if (!/^\d{3}-\d{7}$/.test(contact)) {
-        txtContactElm.focus();
-        txtContactElm.select();
+    const duration = txtDurationElm.value.trim();
+    const name = txtNameElm.value.trim();
+    if (!/\d{1,}/.test(duration)) {
+        txtDurationElm.select();
+        txtDurationElm.focus();
         return;
     }
-    fetch(`${API_BASE_URL}/teachers`, {
+    if (!/[A-Za-z ]{3,}/.test(name)) {
+        txtNameElm.select();
+        txtNameElm.focus();
+        return;
+    }
+    if (btnAddElm.innerText === "ADD") fetch("http://localhost:8080/courses", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
         },
         body: JSON.stringify({
-            name,
-            contact
+            "name": name,
+            "durationInMonths": duration
         })
     }).then((res)=>{
-        if (res.status == 201) res.json.then((teacher)=>{
-            createNewRow(teacher);
+        if (res.status === 201) {
+            console.log(res);
+            res.json().then((course)=>createNewRow(course)).catch((err)=>{
+                alert("error");
+            });
+            txtDurationElm.value = "";
             txtNameElm.value = "";
-            txtContactElm.value = "";
             txtNameElm.focus();
-        });
-        else alert("failed");
+        }
     }).catch((err)=>{
-        alert("Something went wrong");
+        alert("Error in saving course");
+    });
+    else if (btnAddElm.innerText === "UPDATE") fetch(`http://localhost:8080/courses/${selectedCourseData.id}`, {
+        method: "PATCH",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            name: name,
+            "durationInMonths": duration
+        })
+    }).then((res)=>{
+        // console.log(res);
+        // console.log("Wade goda");
+        if (res.status === 200) {
+            selectedCourse.innerHTML = `<td scope="row">${selectedCourseData.id}</td>
+                <td>${txtNameElm.value}</td>
+                <td>${txtDurationElm.value} months</td>
+                <td><button type="button" class="btn btn-danger">Delete <i class="bi bi-trash-fill"></i></button>
+                 </td>`;
+            btnClear.click();
+        }
+    }).catch((err)=>{
+        console.log("We are bad");
     });
 });
-function loadAllTeachers() {
-//Todo: Retrieve teachers list from back end
-}
-function createNewRow(teacher) {
+function createNewRow(course) {
+    // console.log(course);
     const trElm = document.createElement("tr");
-    document.querySelector("#tbl tbody").append(trElm);
+    trElm.id = `tr-${course.id}`;
     trElm.innerHTML = `
-                    <tr>
-                        <td>$teacher.id}</td>
-                        <td>$teacher.name}</td>
-                        <td>$teacher.contact}</td>
-                        <td><button class="delete btn btn-danger">Delete</button>
-                    </tr>
+    <td scope="row">${course.id}</td>
+    <td>${course.name}</td>
+    <td>${course.durationInMonths} months</td>
+    <td><button type="button" class="btn btn-danger">Delete <i class="bi bi-trash-fill"></i></button>
+     </td>
     `;
+    tblBodyElm.append(trElm);
 }
+function loadAllCourses() {
+    console.log("Load All Courses");
+    const promise = fetch("http://localhost:8080/courses", {
+        method: "GET"
+    }).then((res)=>{
+        if (res.status === 200) {
+            console.log(res);
+            res.json().then((courseList)=>{
+                courseList.forEach((course)=>{
+                    createNewRow(course);
+                });
+            });
+            txtDurationElm.value = "";
+            txtNameElm.value = "";
+            txtNameElm.focus();
+        }
+    }).catch((err)=>{
+        console.log(err);
+        alert("Error in saving course");
+    });
+}
+document.querySelector("#tbody").addEventListener("click", (e)=>{
+    console.log(e.target?.tagName);
+    const deletingTR = e.target?.closest("tr");
+    const deletingID = deletingTR.id.substring(3);
+    if (e.target?.tagName === "BUTTON") {
+        fetch(`http://localhost:8080/courses/${deletingID}`, {
+            method: "DELETE"
+        }).then((res)=>{
+            // console.log(res);
+            if (res.status === 204) deletingTR.remove();
+        }).catch((err)=>{
+            console.log("We are bad");
+        });
+        btnClear.click();
+    } else fetch(`http://localhost:8080/courses/${deletingID}`, {
+        method: "GET"
+    }).then((res)=>{
+        // console.log(res);
+        if (res.status === 200) res.json().then((cousre)=>{
+            selectedCourse = deletingTR;
+            selectedCourseData = cousre;
+            txtNameElm.value = cousre.name;
+            txtDurationElm.value = cousre.durationInMonths;
+            btnAddElm.innerText = "UPDATE";
+        });
+    }).catch((err)=>{
+        console.log("We are bad");
+    });
+});
+btnClear.addEventListener("click", ()=>{
+    txtDurationElm.value = "";
+    txtNameElm.value = "";
+    selectedCourse = null;
+    selectedCourseData = null;
+    btnAddElm.innerText = "ADD";
+});
 
-},{}]},["amRpJ","5DaYm"], "5DaYm", "parcelRequiree74a")
+},{}]},["7OWwZ","eM5YZ"], "eM5YZ", "parcelRequiree74a")
 
-//# sourceMappingURL=temp.521d3eee.js.map
+//# sourceMappingURL=courses.79358b14.js.map
