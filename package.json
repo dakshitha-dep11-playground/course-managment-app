@@ -1,13 +1,12 @@
 {
   "name": "imd-front-end",
   "version": "1.0.0",
-  "source": "index.html",
+  "source": "src/index.html",
   "scripts": {
     "start": "parcel --no-cache",
     "build": "rm -rf dist && parcel build"
   },
-  "keywords": [],
-  "author": "",
+ 
   "license": "ISC",
   "devDependencies": {
     "parcel": "^2.10.3"
