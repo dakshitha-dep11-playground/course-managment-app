@@ -23,7 +23,30 @@ footer {
   height: 100%;
 }
 
-#main-container > div > div {
+#table-header > div {
+  background-color: #0f0;
+  border: .5px solid #000;
+  height: 35px;
+}
+
+#tbl-div {
+  align-items: center;
+  height: 600px;
+  position: relative;
+  top: 20px;
+  overflow: scroll;
+}
+
+thead {
+  background-color: #0f0;
+}
+
+tr > button {
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+table {
   border: 1px solid #000;
 }
 

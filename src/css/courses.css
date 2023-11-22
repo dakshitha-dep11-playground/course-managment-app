@@ -29,5 +29,35 @@ footer{
 }
 
 #main-container>div>div{
+    /* border: 1px solid black; */
+}
+
+#table-header>div{
+    background-color: lime;
+    height: 35px;
+    border: 0.5px solid black;
+    /* border-bottom: 2px solid black; */
+}
+
+#tbl-div{
+    /* padding-top: 30px; */
+    height: 600px;
+    overflow: scroll;
+    align-items: center;
+    /* border: 1px solid black; */
+    position: relative;
+   top: 20px;
+}
+
+ thead{
+    background-color: lime;
+}
+
+tr > button{
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+table{
     border: 1px solid black;
 }

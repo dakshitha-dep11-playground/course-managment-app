@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="/node_modules/bootstrap-icons/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="css/courses.css">
     <script type="module" src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-
+    <script type="module" src="js/course.js"></script>
 </head>
 
 <body class="">
@@ -17,29 +17,54 @@
         <div>IMS - Courses</div>
     </header>
 
-    <div id="main-container" class=".container-md text-center m-4">
-        <div class="row mx-4 text-center justify-content-center">
+    <div id="main-container" class=".container-md  m-4">
+        <div class="row mx-4  ">
             <div class="col-md-4 my-2 mx-3  col-8">
                 <div class="mb-3">
 
                     <label for="course-name" class="form-label">Course Name</label>
-                    <input type="text" class="form-control" id="course-name" >
+                    <input type="text" class="form-control" id="course-name">
                     <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
                 </div>
-                
-                
-                <button type="submit" class="btn btn-primary">Submit</button>
+
+                <div class="mb-3">
+
+                    <label for="course-name" class="form-label">Duration in Months</label>
+                    <input type="text" class="form-control" id="course-duration">
+                    <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
+                </div>
+
+
+                <button id="btn-add" type="submit" class="btn btn-primary">ADD</button>
+                <button id="btn-clear" type="button" class="btn btn-info">CLEAR</button>
 
             </div>
-            <div class="col-md-7 m-2 col-10">
-                Column
+            <div id="tbl-div" class="col-md-7 m-2 col-12 text-center">
+                <table  class="table table-success table-striped-columns">
+                    <thead>
+                      <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Duration</th>
+                        <th scope="col">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody id="tbody">
+                      <!-- <tr>
+                        <td scope="row">1</td>
+                        <td>Mark</td>
+                        <td>Otto</td>
+                        <td><button type="button" class="btn btn-danger">Danger</button></td>
+                      </tr> -->
+                      
+                      
+                    </tbody>
+                  </table>
             </div>
 
         </div>
 
     </div>
-
-
 
 
 

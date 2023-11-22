@@ -579,19 +579,22 @@ const txtNameElm = document.querySelector("#txt-name");
 const txtContactElm = document.querySelector("#txt-contact");
 const btnAddElm = document.querySelector("#btn-add");
 const API_BASE_URL = "https://97803577-4761-427d-a367-08996e2c4674.mock.pstmn.io";
-alert(API_BASE_URL);
-btnAddElm.addEventListener("click", ()=>{
-    const name = txtNameElm.value;
-    const contact = txtContactElm.value;
+btnAddElm.addEventListener("click", (e)=>{
+    const name = txtNameElm.value.trim();
+    const contact = txtContactElm.value.trim();
+    // alert("dhcys")
+    console.log(name, contact);
     if (!/^[A-Za-z ]+$/.test(name)) {
         txtNameElm.focus();
         txtNameElm.select();
         return;
-    } else if (!/^\d{3}-\d{7}$/.test(contact)) {
+    }
+    if (!/^\d{3}-\d{7}$/.test(contact)) {
         txtContactElm.focus();
         txtContactElm.select();
         return;
     }
+    // Todo : Save the teacher
     fetch(`${API_BASE_URL}/teachers`, {
         method: "POST",
         headers: {
@@ -602,32 +605,31 @@ btnAddElm.addEventListener("click", ()=>{
             contact
         })
     }).then((res)=>{
-        if (res.status == 201) res.json.then((teacher)=>{
-            createNewRow(teacher);
-            txtNameElm.value = "";
+        if (res.status === 201) {
+            // res.json().then(console.log)
+            res.json().then((teacher)=>createNewRow(teacher));
             txtContactElm.value = "";
+            txtNameElm.value = "";
             txtNameElm.focus();
-        });
-        else alert("failed");
+        } else alert("Failed to load ");
     }).catch((err)=>{
-        alert("Something went wrong");
+        alert("Error");
     });
 });
-function loadAllTeachers() {
-//Todo: Retrieve teachers list from back end
-}
 function createNewRow(teacher) {
     const trElm = document.createElement("tr");
     document.querySelector("#tbl tbody").append(trElm);
     trElm.innerHTML = `
-                    <tr>
-                        <td>$teacher.id}</td>
-                        <td>$teacher.name}</td>
-                        <td>$teacher.contact}</td>
-                        <td><button class="delete btn btn-danger">Delete</button>
-                    </tr>
+        <tr>
+            <td>${teacher.id}</tr>
+            <td>${teacher.name}</tr>
+            <td>${teacher.contact}</tr>
+            <td><button>Delete</button></td>
+        </tr>
     `;
 }
+function loadAllTeachers() {}
+loadAllTeachers();
 
 },{}]},["amRpJ","5DaYm"], "5DaYm", "parcelRequiree74a")
 
